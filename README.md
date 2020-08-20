@@ -7,3 +7,4 @@ TODO:
 - Observer pattern needs abstract class.
 - Credentials from SESSION and not hardcoded for test purposes.
 - Remove border lines for design purposes.
+- As a one week project, needs a lot of clean up.
