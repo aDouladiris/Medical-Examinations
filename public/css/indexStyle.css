@@ -1,0 +1,46 @@
+body {    
+    line-height: 1.92;
+    font-weight: 500;
+    font-family: 'Poppins';
+    background-image: -moz-linear-gradient(0deg, #884d80 0%, #9795f0 0%, #2b5876 0%, #4e4376 100%);
+    background-image: -webkit-linear-gradient(0deg, #884d80 0%, #9795f0 0%, #2b5876 0%, #4e4376 100%);
+    background-image: -ms-linear-gradient(0deg, #884d80 0%, #9795f0 0%, #2b5876 0%, #4e4376 100%); }
+  
+  
+  a:link {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  
+  .main {
+    border: 3px solid red;
+	margin: auto;
+	padding: 15%;
+  }
+  
+  .container {
+    border: 3px solid yellow;
+    color: white;
+    text-align: center;
+    margin: auto;
+    
+  }
+
+
+
+
+
+    
