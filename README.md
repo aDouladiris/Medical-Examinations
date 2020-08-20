@@ -6,3 +6,4 @@ TODO:
 - Incude all queries in Dao model.
 - Observer pattern needs abstract class.
 - Credentials from SESSION and not hardcoded for test purposes.
+- Remove border lines for design purposes.
