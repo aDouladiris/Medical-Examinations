@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/indexStyle.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="js/session/home.js"></script>
     <style>
          .left {
             /* border: none; */
@@ -39,8 +41,9 @@
         }
 
     </style>
+    
 
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 
 
 </head>
@@ -87,32 +90,11 @@
                     Επίλεξε τις εξετάσεις σου.
                 </h3>
 
-                <form action="exams">
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Είδη εξετάσεων</label>
-                        </div>
-                        <select class="custom-select" id="inputGroupSelect01">
-                            <option selected>Επίλεξε...</option>
-                            <option value="1">Αιματολογικές</option>
-                            <option value="2">Ακτινογραφίες</option>
-                            <option value="3">Αλλεργιολογικές εξετάσεις</option>
-                            <option value="4">Ανοσολογικές εξετάσεις</option>
-                            <option value="5">Αξονικές τομογραφίες</option>
-                            <option value="6">Βιοχημικές εξετάσεις</option>
-                            <option value="7">Γαστρεντερολογικές εξετάσεις</option>
-                            <option value="8">Γυναικολογικές εξετάσεις</option>
-                            <option value="9">Εξετάσεις ούρων</option>
-                            <option value="10">Καρδιολογικές εξετάσεις</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="btn">
+                    <button onclick="openExams()" type="submit" class="btn">
                         <i class='fas fa-microscope' style='font-size:48px;color:white'></i>
                     </button>
 
-                </form>
+
 
                 <!-- <p>Click here to <a href="exams" title="Exams"> User Exams.</p> -->
             </div>
@@ -130,7 +112,13 @@
 
     </div>
 
+    <!-- <script>
+function openExams() {
 
+    window.location = "exams";
+  
+}
+</script> -->
      
 </body>
 </html>

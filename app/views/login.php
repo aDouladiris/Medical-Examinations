@@ -24,12 +24,12 @@
 
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" name="email" class="form-control" value="">
+                <input type="email" name="email" class="form-control" value="htta@gmail.com">
             </div>    
 
             <div class="form-group">
                 <label>Κωδικός</label>
-                <input type="password" name="password" class="form-control" value="">
+                <input type="password" name="password" class="form-control" value="1">
             </div>
 
             <div class="form-group">

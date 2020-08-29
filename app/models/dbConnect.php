@@ -54,6 +54,20 @@ class dbConnect {
                     echo "ERROR: Could not able to execute $sql_createTable. " . mysqli_error($connection);
                 }
 
+                // Attempt create table about exams category
+                $sql_createTable = "CREATE TABLE appRecords.categories (
+                    exam_id INT NOT NULL,
+                    examination VARCHAR(30) NOT NULL,
+                    price DECIMAL (4, 2) NOT NULL
+                )";
+
+
+                if(mysqli_query($connection, $sql_createTable)){
+                    echo "Table created successfully.";
+                } else{
+                    echo "ERROR: Could not able to execute $sql_createTable. " . mysqli_error($connection);
+                }
+
                 //populate table                
                 $sql_populateTable = "INSERT INTO appRecords.patients(first_name, last_name, email, password)
                 VALUES 
@@ -73,12 +87,14 @@ class dbConnect {
                 }
 
                 // Attempt create table query execution
-                $sql_createTable = "CREATE TABLE appRecords.medical_exams (
+                $sql_createTable = "CREATE TABLE appRecords.receipt_patients (
                     patient_id INT NOT NULL,
-                    examinations VARCHAR(30) NOT NULL,
+                    date VARCHAR(30) NOT NULL,
+                    time VARCHAR(30) NOT NULL,
+                    timestamp_hash VARCHAR(30) NOT NULL PRIMARY KEY,
+                    total VARCHAR(30) NOT NULL,
                     FOREIGN KEY(patient_id) REFERENCES patients(patient_id)
                 )";
-
 
                 if(mysqli_query($connection, $sql_createTable)){
                     echo "Table created successfully.";
@@ -86,34 +102,83 @@ class dbConnect {
                     echo "ERROR: Could not able to execute $sql_createTable. " . mysqli_error($connection);
                 }
 
+                // Attempt create table query execution
+                $sql_createTable = "CREATE TABLE appRecords.receipt_card (
+                    timestamp_hash VARCHAR(30) NOT NULL,
+                    name VARCHAR(30) NOT NULL,
+                    card_number VARCHAR(30) NOT NULL,
+                    expiration VARCHAR(30) NOT NULL,
+                    cvv VARCHAR(30) NOT NULL,
+                    FOREIGN KEY(timestamp_hash) REFERENCES receipt_patients(timestamp_hash)
+                )";
+
+                if(mysqli_query($connection, $sql_createTable)){
+                    echo "Table created successfully.";
+                } else{
+                    echo "ERROR: Could not able to execute $sql_createTable. " . mysqli_error($connection);
+                }
+
+                // Attempt create table query execution
+                $sql_createTable = "CREATE TABLE appRecords.receipt_bank (
+                    timestamp_hash VARCHAR(30) NOT NULL,
+                    bank_name VARCHAR(30) NOT NULL,
+                    account_number VARCHAR(30) NOT NULL,
+                    iban VARCHAR(30) NOT NULL,                    
+                    FOREIGN KEY(timestamp_hash) REFERENCES receipt_patients(timestamp_hash)
+                )";
+
+                if(mysqli_query($connection, $sql_createTable)){
+                    echo "Table created successfully.";
+                } else{
+                    echo "ERROR: Could not able to execute $sql_createTable. " . mysqli_error($connection);
+                }
+
+                // Attempt create table query execution
+                $sql_createTable = "CREATE TABLE appRecords.receipt_examinations (
+                    timestamp_hash VARCHAR(30) NOT NULL,
+                    examination VARCHAR(30) NOT NULL,
+                    price VARCHAR(30) NOT NULL,
+                    FOREIGN KEY(timestamp_hash) REFERENCES receipt_patients(timestamp_hash)
+                )";
+
+                if(mysqli_query($connection, $sql_createTable)){
+                    echo "Table created successfully.";
+                } else{
+                    echo "ERROR: Could not able to execute $sql_createTable. " . mysqli_error($connection);
+                }                
+
                 //populate table                
-                $sql_populateTable = "INSERT INTO appRecords.medical_exams (patient_id, examinations)
+                $sql_populateTable = "INSERT INTO appRecords.categories (exam_id, examination, price)
                 VALUES
-                    (1, 'eksetash_1'),
-                    (1, 'eksetash_2'),
-                    (1, 'eksetash_3'),
-                    (1, 'eksetash_4'),
-                    (1, 'eksetash_5'),
-                    (2, 'eksetash_6'),
-                    (2, 'eksetash_7'),
-                    (2, 'eksetash_8'),
-                    (2, 'eksetash_9'),
-                    (2, 'eksetash_10'),
-                    (3, 'eksetash_11'),
-                    (3, 'eksetash_12'),
-                    (3, 'eksetash_13'),
-                    (3, 'eksetash_14'),
-                    (3, 'eksetash_15'),
-                    (4, 'eksetash_16'),
-                    (4, 'eksetash_17'),
-                    (4, 'eksetash_18'),
-                    (4, 'eksetash_19'),
-                    (4, 'eksetash_20'),
-                    (5, 'eksetash_21'),
-                    (5, 'eksetash_22'),
-                    (5, 'eksetash_23'),
-                    (5, 'eksetash_24'),
-                    (5, 'eksetash_25')
+                    (1, 'Γενική Εξέταση Αίματος', 2.50),
+                    (1, 'Αιματοκρίτης', 0.20),
+                    (1, 'Έλεγχος αναιμίας Ι', 10.00),
+                    (1, 'Δείκτης αιμοπεταλίων', 1.76),
+                    (1, 'Έλεγχος θυρεοειδούς ΙΙΙ', 60.00),
+
+                    (2, 'Ακτινογραφία πανοραμική', 20.00),
+                    (2, 'Ψηφιακή ακτινογραφία πανοραμική', 20.00),
+                    (2, 'Ακτινογραφία θώρακος', 7.50),
+                    (2, 'Ακτινογραφία αγκώνος', 7.50),
+                    (2, 'Ακτινογραφία κρανίου', 7.50),
+
+                    (3, 'Ειδική Ανοσοσφαιρίνη IgE', 8.00),
+                    (3, 'Rast I1 - Μέλισσα', 10.00),
+                    (3, 'Rast IX1A* - Εισπνεόμενα1(G3/W1/W6/G6/T8)', 10.00),
+                    (3, 'RastMX1A* - Μύκητες1(Μ1/Μ2/Μ3//M5/Μ6)', 12.00),
+                    (3, 'Rast E2 - Επιθήλιο σκύλου', 8.00),
+
+                    (4, 'ANCA-C', 5.00),
+                    (4, 'Αυστραλιανό Αντιγόνο (HBsAg)', 5.00),
+                    (4, 'Strep Test', 5.46),
+                    (4, 'Αντισώματα HIV', 4.75),
+                    (4, 'Προγεννητικός αιματολογικός έλεγχος', 70.00),
+
+                    (5, 'Αξονική τομογραφία θώρακος', 40.00),
+                    (5, 'Αξονική αγγειογραφία θώρακος', 71.00),
+                    (5, 'Αξονική τομογραφία άκρου πόδος', 45.00),
+                    (5, 'Αξονική τομογραφία γόνατος', 45.00),
+                    (5, 'Αξονική τομογραφία ποδοκνημικής', 40.00)
                     ;";
 
 
@@ -132,14 +197,6 @@ class dbConnect {
                 }
 
                 // Assign User permissions
-                $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.medical_exams TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";
-                if ($connection->query($sql_assignPermissions) === TRUE) {
-                    echo "Assigning Privs successfully";
-                } else {
-                    echo "Error Assigning Privs: " . $connection->error;
-                }
-
-                // Assign User permissions
                 $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.patients TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";
                 if ($connection->query($sql_assignPermissions) === TRUE) {
                     echo "Assigning Privs successfully";
@@ -148,6 +205,45 @@ class dbConnect {
                 }
 
 
+                // Assign User permissions
+                $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.categories TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";
+                if ($connection->query($sql_assignPermissions) === TRUE) {
+                    echo "Assigning Privs successfully";
+                } else {
+                    echo "Error Assigning Privs: " . $connection->error;
+                }
+
+                // Assign User permissions
+                $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.receipt_patients TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";
+                if ($connection->query($sql_assignPermissions) === TRUE) {
+                    echo "Assigning Privs successfully";
+                } else {
+                    echo "Error Assigning Privs: " . $connection->error;
+                }
+
+                // Assign User permissions
+                $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.receipt_card TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";
+                if ($connection->query($sql_assignPermissions) === TRUE) {
+                    echo "Assigning Privs successfully";
+                } else {
+                    echo "Error Assigning Privs: " . $connection->error;
+                }
+                
+                // Assign User permissions
+                $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.receipt_bank TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";
+                if ($connection->query($sql_assignPermissions) === TRUE) {
+                    echo "Assigning Privs successfully";
+                } else {
+                    echo "Error Assigning Privs: " . $connection->error;
+                }
+
+                // Assign User permissions
+                $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.receipt_examinations TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";
+                if ($connection->query($sql_assignPermissions) === TRUE) {
+                    echo "Assigning Privs successfully";
+                } else {
+                    echo "Error Assigning Privs: " . $connection->error;
+                }
 
                 // Assign User permissions
                 $sql_flush = "FLUSH PRIVILEGES; ";

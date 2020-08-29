@@ -25,7 +25,8 @@ class Profile extends Controller {
             $this->view('session/profile', ['first_name' => $UserObserver->first_name, 
                                             'last_name'  => $UserObserver->last_name,
                                             'email'  => $UserObserver->email,
-                                            'exams' => $ExaminationsObserver->exams ] );
+                                            'exams_bank' => $ExaminationsObserver->exams_bank,
+                                            'exams_card' => $ExaminationsObserver->exams_card ] );
         }
 
 

@@ -3,7 +3,8 @@
 class ExaminationsObserver implements SplObserver {
 
     public $patient_id;
-    public $exams;
+    public $exams_card;
+    public $exams_bank;
 
 
 
@@ -14,7 +15,8 @@ class ExaminationsObserver implements SplObserver {
    
     public function update(\SplSubject $subject) {        
 
-        $this->exams = $subject->getContent();
+        $this->exams_bank = $subject->getBankContent();
+        $this->exams_card = $subject->getCardContent();
 
 
 
