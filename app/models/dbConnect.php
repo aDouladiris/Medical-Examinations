@@ -106,9 +106,9 @@ class dbConnect {
                 $sql_createTable = "CREATE TABLE appRecords.receipt_card (
                     timestamp_hash VARCHAR(30) NOT NULL,
                     name VARCHAR(30) NOT NULL,
-                    card_number VARCHAR(30) NOT NULL,
-                    expiration VARCHAR(30) NOT NULL,
-                    cvv VARCHAR(30) NOT NULL,
+                    card_number VARCHAR(16) NOT NULL,
+                    expiration VARCHAR(7) NOT NULL,
+                    cvv VARCHAR(3) NOT NULL,
                     FOREIGN KEY(timestamp_hash) REFERENCES receipt_patients(timestamp_hash)
                 )";
 
@@ -124,6 +124,19 @@ class dbConnect {
                     bank_name VARCHAR(30) NOT NULL,
                     account_number VARCHAR(30) NOT NULL,
                     iban VARCHAR(30) NOT NULL,                    
+                    FOREIGN KEY(timestamp_hash) REFERENCES receipt_patients(timestamp_hash)
+                )";
+
+                if(mysqli_query($connection, $sql_createTable)){
+                    echo "Table created successfully.";
+                } else{
+                    echo "ERROR: Could not able to execute $sql_createTable. " . mysqli_error($connection);
+                }
+
+                // Attempt create table query execution
+                $sql_createTable = "CREATE TABLE appRecords.receipt_insurance (
+                    timestamp_hash VARCHAR(30) NOT NULL,
+                    description VARCHAR(100) NOT NULL,        
                     FOREIGN KEY(timestamp_hash) REFERENCES receipt_patients(timestamp_hash)
                 )";
 
@@ -236,6 +249,14 @@ class dbConnect {
                 } else {
                     echo "Error Assigning Privs: " . $connection->error;
                 }
+
+                // Assign User permissions
+                $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.receipt_insurance TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";
+                if ($connection->query($sql_assignPermissions) === TRUE) {
+                    echo "Assigning Privs successfully";
+                } else {
+                    echo "Error Assigning Privs: " . $connection->error;
+                }                
 
                 // Assign User permissions
                 $sql_assignPermissions = "GRANT SELECT, INSERT, UPDATE ON appRecords.receipt_examinations TO 'applicationAccount'@'localhost' WITH GRANT OPTION; ";

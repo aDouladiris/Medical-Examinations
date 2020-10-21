@@ -8,15 +8,10 @@ class UserObserver implements SplObserver {
     public $email;
     public $password;
 
-
-    // public function __construct($name) {
-    //     $this->name = $name;
-    // }
-
    
     public function update(\SplSubject $subject) {        
 
-        $content = $subject->getContent();
+        $content = $subject->getUserContent();
 
         $this->patient_id = $content['patient_id'];
         $this->first_name = $content['first_name'];

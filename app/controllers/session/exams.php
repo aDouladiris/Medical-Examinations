@@ -2,41 +2,31 @@
 
 class Exams extends Controller {
 
-    public function index(){  
-              
+    public function index(){              
 
         if(isset($_SESSION['email']) && isset($_SESSION['password']) ) {
+
+            $email = $_SESSION['email'];
+            $conn = $this->model('dbConnect')->connect();                       
+            $dao = $this->model('Dao', $conn );
 
             if ( isset($_POST['category']) ){
                 $exam_category = $_POST['category'][0];
 
-                $examCategories = $this->model('examCategories', $exam_category);
+                $examCategories = $this->model('examCategories');
 
-                echo json_encode($examCategories->exams_per_category);
+                echo json_encode($examCategories->getExaminations($dao, $exam_category) );
 
                 die();
-                
-                
+                                
             }
 
-
-
-
-
             $UserObservable = $this->model('UserObservable');
-            $UserObserver = $this->model('UserObserver');
-    
-            $UserObservable->attach($UserObserver);
-    
-            $UserObservable->dbRead();
+            $UserObserver = $this->model('UserObserver');    
+            $UserObservable->attach($UserObserver);    
+            $UserObservable->dbRead($dao, $email);
 
-            $ExaminationsObservable = $this->model('ExaminationsObservable');
-            $ExaminationsObserver = $this->model('ExaminationsObserver');
-    
-            $ExaminationsObservable->attach($ExaminationsObserver);
-    
-            $ExaminationsObservable->dbRead();
-            
+            $conn->close();            
 
             $this->view('session/exams', ['patient_id' => $UserObserver->patient_id,
                                           'first_name' => $UserObserver->first_name, 
@@ -70,18 +60,13 @@ class Exams extends Controller {
                 $examinations = $_POST['examinations'];
 
                 $conn = $this->model('dbConnect')->connect();
-                $this->dao = $this->model('Dao', $conn );
+                $dao = $this->model('Dao', $conn );
 
-                $this->dao->dbInsertReceipt($patient_id, $receipt_date, $receipt_time, $timestamp_hash, $pay_method, $total_payment, $examinations);
-              
-
-     
+                $dao->dbInsertReceipt($patient_id, $receipt_date, $receipt_time, $timestamp_hash, $pay_method, $total_payment, $examinations);
 
             }
-
             
             die();
-
 
         }
 

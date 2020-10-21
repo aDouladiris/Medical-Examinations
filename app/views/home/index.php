@@ -2,18 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Αφετηρία</title>
-    <link rel="stylesheet" href="css/indexStyle.css">
+    <title>Αρχική Σελίδα</title>
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/home/index.css">
 
     <style>
 
-    h1 {
-        font-size: 200%;
-    }
 
-    p {
-        font-size: 120%;
-    }
 
     </style>
 

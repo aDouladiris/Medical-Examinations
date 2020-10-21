@@ -4,16 +4,13 @@ class Dao {
 
     private $conn;
 
-    static $email;
-    static $password;
-
     public function __construct($db_connection){
 
         $this->conn = $db_connection;       
         
     }
 
-    public function create($table , $first_name, $last_name, $email, $password){
+    public function create($table, $first_name, $last_name, $email, $password){
 
         $sql = "INSERT INTO " .$table. " (first_name, last_name, email, password) 
               VALUES ('$first_name', '$last_name', '$email', '$password') ";
@@ -38,54 +35,18 @@ class Dao {
         }
     }
 
-    public function dbReadUserLogin($email, $password){
-
-        Dao::$email = $email;
-        Dao::$password = $password;
-
-        $email = mysqli_real_escape_string($this->conn, $email );
-        $password = mysqli_real_escape_string($this->conn, $password );
+    public function dbFindUserLogin($email, $password){ 
 
         $sql = "SELECT * FROM patients WHERE email = '$email' and password = '$password'";
-
-        //echo $sql;
 
         $result = mysqli_query($this->conn, $sql);
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $count = mysqli_num_rows($result);
 
+        // Close connection
+        $this->conn->close();
+
         return $count;
-
-    }
-
-    public function dbReadUser(){
-
-        $sql = "
-        SELECT * 
-        FROM patients 
-        WHERE email = '$email'; ";
-
-        $result = mysqli_query($this->conn, $sql) or die( mysqli_error($this->conn));
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-        return $row;
-
-    }
-
-    public function dbReadExams(){
-
-        $sql = "
-        SELECT examinations 
-        FROM medical_exams 
-        LEFT JOIN patients 
-        ON patients.patient_id=medical_exams.patient_id 
-        WHERE patients.email = '$email'; 
-        ";
-
-        $result = mysqli_query($this->conn, $sql) or die( mysqli_error($this->conn));
-        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        return $row;
 
     }
 
@@ -101,10 +62,27 @@ class Dao {
             //echo "Table populated successfully.";
         } else{
             echo "ERROR: Could not able to execute $sql_populateTable. " . mysqli_error($this->conn);
+            $this->conn->close();
             return;
         }
 
-        if (count($pay_method) > 3){
+        if (gettype($pay_method) == 'string'){
+
+            $sql_populateTable = "INSERT INTO appRecords.receipt_insurance (timestamp_hash, description)
+            VALUES
+                ('$timestamp_hash', '$pay_method' )
+                ;";
+
+            if(mysqli_query($this->conn, $sql_populateTable)){
+                //echo "Table populated successfully.";
+                
+            } else{
+                echo "ERROR: Could not able to execute $sql_populateTable. " . mysqli_error($this->conn);  
+                $this->conn->close();
+                return;            
+            }
+        }
+        else if (count($pay_method) > 3){
 
             $name = $pay_method['username'];
             $card_number = $pay_method['cardNumber'];
@@ -118,8 +96,10 @@ class Dao {
 
             if(mysqli_query($this->conn, $sql_populateTable)){
                 //echo "Table populated successfully.";
+                
             } else{
-                echo "ERROR: Could not able to execute $sql_populateTable. " . mysqli_error($this->conn);    
+                echo "ERROR: Could not able to execute $sql_populateTable. " . mysqli_error($this->conn);  
+                $this->conn->close();
                 return;            
             }
         }
@@ -139,6 +119,7 @@ class Dao {
                 //echo "Table populated successfully.";
             } else{
                 echo "ERROR: Could not able to execute $sql_populateTable. " . mysqli_error($this->conn);
+                $this->conn->close();
                 return;
             }
         }
@@ -146,7 +127,7 @@ class Dao {
 
         foreach ($examinations as $item) {
                 $description = $item[1];
-                $price = $item[0];
+                $price = $item[0]; // . " Ευρώ";
 
                 //populate table, multiple inserts      
                 $sql_populateTable = "INSERT INTO appRecords.receipt_examinations (timestamp_hash, examination, price )
@@ -158,13 +139,106 @@ class Dao {
                     //echo "Table populated successfully.";
                 } else{
                     echo "ERROR: Could not able to execute $sql_populateTable. " . mysqli_error($this->conn);
+                    $this->conn->close();
                     return;
                 }
         }
 
         echo "Η εγγραφή καταχωρήθηκε επιτυχώς!";
+
+        // Close connection
+        $this->conn->close();
         
 
+    }
+
+
+    public function getExaminations($category_index){
+
+        $sql = "
+        SELECT * 
+        FROM categories 
+        WHERE exam_id = '$category_index'; ";
+
+        $result = mysqli_query($this->conn, $sql) or die( mysqli_error($this->conn));
+        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        return $row;
+
+    }
+
+    public function getHistoricalExaminations($email){
+
+        $returning_row = array();
+
+        $sql = "
+        SELECT date, time, examination, price, bank_name, account_number, iban, total
+        FROM patients
+        LEFT JOIN receipt_patients 
+        ON patients.patient_id=receipt_patients.patient_id
+        LEFT JOIN receipt_bank 
+        ON receipt_patients.timestamp_hash=receipt_bank.timestamp_hash        
+        LEFT JOIN receipt_examinations 
+        ON receipt_patients.timestamp_hash=receipt_examinations.timestamp_hash
+        WHERE receipt_bank.timestamp_hash IS NOT NULL AND patients.email = '$email'
+        ORDER BY date DESC, time DESC;
+        ;";
+
+        $result = mysqli_query($this->conn, $sql) or die( mysqli_error($this->conn));
+        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $returning_row[0] = $row;
+
+        $sql = "
+        SELECT date, time, examination, price, name, card_number, expiration, cvv, total
+        FROM patients
+        LEFT JOIN receipt_patients 
+        ON patients.patient_id=receipt_patients.patient_id        
+        LEFT JOIN receipt_card 
+        ON receipt_patients.timestamp_hash=receipt_card.timestamp_hash        
+        LEFT JOIN receipt_examinations 
+        ON receipt_patients.timestamp_hash=receipt_examinations.timestamp_hash
+        WHERE receipt_card.timestamp_hash IS NOT NULL AND patients.email = '$email'
+        ORDER BY date DESC, time DESC;
+        ;";
+
+        $result = mysqli_query($this->conn, $sql) or die( mysqli_error($this->conn));
+        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $returning_row[1] = $row;
+
+        $sql = "
+        SELECT date, time, examination, price, description, total
+        FROM patients
+        LEFT JOIN receipt_patients 
+        ON patients.patient_id=receipt_patients.patient_id
+        LEFT JOIN receipt_insurance 
+        ON receipt_patients.timestamp_hash=receipt_insurance.timestamp_hash
+        LEFT JOIN receipt_examinations 
+        ON receipt_patients.timestamp_hash=receipt_examinations.timestamp_hash
+        WHERE receipt_insurance.timestamp_hash IS NOT NULL AND patients.email = '$email'
+        ORDER BY date DESC, time DESC;
+        ;";
+
+        $result = mysqli_query($this->conn, $sql) or die( mysqli_error($this->conn));
+        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $returning_row[2] = $row;
+
+        return $returning_row;
+
+    }
+
+    public function getPatientInfo($email){
+
+        $sql = "
+        SELECT * 
+        FROM patients 
+        WHERE email = '$email'; ";
+
+        $result = mysqli_query($this->conn, $sql) or die( mysqli_error($this->conn));
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        return $row;
     }
 
 

@@ -2,8 +2,6 @@
 
 class Controller {
 
-
-
     public function model($model, $params=' '){
 
         require_once '../app/models/'. $model .'.php';

@@ -13,32 +13,22 @@ class Login extends Controller {
         if (isset($_POST['email']) && isset($_POST['password']) ){
 
             $conn = $this->model('dbConnect')->connect();
+            $dao = $this->model('Dao', $conn );
 
-            $email = mysqli_real_escape_string($conn, $_POST['email']);
-            $password = mysqli_real_escape_string($conn, $_POST['password']);
+            $email = $_POST['email'];
+            $password = $_POST['password'];              
+            $result = $dao->dbFindUserLogin($email, $password);
 
+            if($result == 1) {
 
-            $sql = "SELECT * FROM patients WHERE email = '$email' and password = '$password'";
-
-            $result = mysqli_query($conn, $sql);
-
-            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
- 
-            $count = mysqli_num_rows($result);
-
-
-
-            if($count == 1) {
-
-                $_SESSION['email'] = $row['email']; 
-                $_SESSION['password'] = $row['password'];
-                
-             
+                $_SESSION['email'] = $email; 
+                $_SESSION['password'] = $password;
                 header('Location: ../home');
 
              }
              else {
                 $error = "Your Login Name or Password is invalid";
+                header('Location: ../home');
              }            
 
         }

@@ -14,8 +14,6 @@ class App {
     public function __construct(){
         $url = $this->parseUrl();
 
-        //$url_controller = $url[0];
-
         if(isset($url[0])){
             //If succeed, $this->controller will acquire the value of $url[0]. If not, its value is the default home.
 
@@ -45,19 +43,9 @@ class App {
         }
         else{
             require_once '../app/controllers/' . $this->controller . '.php';
-        }
-
-        // echo "<br>";
-        // echo 'contr: ';
-        // print_r($this->controller);
-        // echo "<br>";        
+        }      
 
         $this->controller = new $this->controller;
-
-        // echo "<br>";
-        // echo 'contr: ';
-        // print_r($this->controller);
-        // echo "<br>";
 
         if(isset($url[1])){
             if(method_exists( $this->controller, $url[1])){

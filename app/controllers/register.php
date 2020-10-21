@@ -25,9 +25,10 @@ class Register extends Controller {
 
                 if ($password == $confirm_password){
 
-                    $this->dao = $this->model('Dao', $this->model('dbConnect')->connect() );
+                    $conn = $this->model('dbConnect')->connect();
+                    $dao = $this->model('Dao', $conn );
 
-                    $register = $this->dao->create("patients" , $first_name, $last_name, $email, $password);
+                    $register = $dao->create("patients" , $first_name, $last_name, $email, $password);
 
                     if ($register){
                         echo '<script type="text/javascript">

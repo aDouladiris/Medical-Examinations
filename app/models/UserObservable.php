@@ -1,76 +1,32 @@
 <?php
 
-class UserObservable implements \SplSubject{
+require_once 'AbstractObservable.php';
+
+class UserObservable extends AbstractObservable {
 
 
-    private $observers = array();
+    protected $observers = array();
 
-    private $content;
+    protected $content_user;
 
-   
-    public function __construct() {
 
-    }
-
-    //add observer
-    public function attach(\SplObserver $observer) {
-        $this->observers[] = $observer;
-    }
-   
-    //remove observer
-    public function detach(\SplObserver $observer) {
-       
-        $key = array_search($observer,$this->observers, true);
-        if($key){
-            unset($this->observers[$key]);
-        }
-    }
    
     //set breakouts news
-    public function dbRead() {
+    public function dbRead($dao, $email) {
 
-        require_once '../app/models/dbConnect.php';
-
-        //$conn = $this->model('dbConnect')->connect();
-
-        $conn = new dbConnect;
-        $conn = $conn->connect();
-
-
-        $myusername = 'htta@gmail.com';
-        $mypassword = '1';
-
-
-        //$sql = "SELECT * FROM patients WHERE email = '$myusername' and password = '$mypassword'";
-
-        $sql = "
-        SELECT * 
-        FROM patients 
-        WHERE email = '$myusername'; ";
-
-        $result = mysqli_query($conn, $sql) or die( mysqli_error($conn));
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-
-        $this->content = $row;
+        $this->content_user = $dao->getPatientInfo($email);
         $this->notify();
     }
 
-
    
-    public function getContent() {
+    public function getUserContent() {
 
-       return $this->content;
+       return $this->content_user;
         
     }
 
    
-    //notify observers(or some of them)
-    public function notify() {
-        foreach ($this->observers as $value) {
-            $value->update($this);
-        }
-    }
+
 
 
 
