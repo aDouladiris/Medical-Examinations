@@ -7,4 +7,10 @@ function openHistory() {
         });
     });
   
+} 
+
+function backToMenu() {
+
+    window.location = "home";
+  
 }
