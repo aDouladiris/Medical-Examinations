@@ -1,0 +1,39 @@
+.login-form {
+    text-align: center;
+    color: white;
+    margin: auto;
+    border: 1px dashed white;
+    border-radius: 10px 10px 10px 10px;
+    width: 40%;
+}
+
+.col-25 {
+    float: left;
+    width: 37%;
+    margin-bottom: 1%;
+    text-align: right;
+}
+
+.col-75 {
+    float: right;
+    width: 61%;
+    margin-bottom: 1%;            
+    text-align: left;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+@media screen and (max-width: 600px) {
+    /* For mobile phones: */
+    .form-group, .col-25, .col-75, input[type=email], input[type=password], input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+        text-align: center;
+    }
+}

@@ -1,0 +1,75 @@
+.register-form {
+    text-align: center;
+    margin: auto;
+    width: 100%;
+}
+
+.fas, .far {
+    font-size:25px;
+    color:white;
+}
+
+.col-25 {
+    float: left;
+    width: 37%;
+    margin-bottom: 1%;
+    text-align: right;
+}
+
+.col-75 {
+    float: right;
+    width: 61%;
+    margin-bottom: 1%;            
+    text-align: left;
+}
+
+.col-25-button {
+    float: left;
+    width: 48%;
+    margin-bottom: 1%;
+    text-align: right;
+}
+
+.col-75-button {
+    float: right;
+    width: 48%;
+    margin-bottom: 1%;            
+    text-align: left;
+}
+
+#reset {
+    background-color: #d40000; 
+    border-radius: 15px;
+    width: 15%;
+    
+}
+
+#save {
+    background-color: #4CAF50; 
+    border-radius: 15px; 
+    width: 15%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.text-center {
+    color: white;
+}
+
+
+@media screen and (max-width: 600px) {
+    /* For mobile phones: */
+    .form-group, .col-25, .col-75, .col-25-button, .col-75-button, input[type=text], input[type=email], input[type=password], input[type=reset], input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+        text-align: center;
+    }
+    .container {
+        width: 100%;
+    }
+}

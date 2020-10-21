@@ -1,0 +1,106 @@
+.container {
+    width: 50%;
+}
+
+.ui-dialog {
+    
+    position: absolute;
+    box-shadow: 1px 1px 30px 5px;
+    background-image: -moz-linear-gradient(0deg, #884d80 0%, #9795f0 0%, #2b5876 0%, #4e4376 100%);
+    background-image: -webkit-linear-gradient(0deg, #884d80 0%, #9795f0 0%, #2b5876 0%, #4e4376 100%);
+    background-image: -ms-linear-gradient(0deg, #884d80 0%, #9795f0 0%, #2b5876 0%, #4e4376 100%); 
+    border-radius: 10px;
+    outline: none;
+    overflow: hidden;
+    margin-top: none;
+}
+
+
+th {
+    text-align: right;
+    padding-right: 1%;
+}
+
+td {
+    text-align: left;
+    padding-left: 1%;
+}
+
+#dialog {
+    color: white;
+    display: none;
+}
+
+#receipt_table tr th {            
+    text-align: left;
+    padding-left: 1%;
+}
+
+#receipt_table {
+    width: 100%;
+}
+
+.col-50-left {
+    float: left;
+    width: 50%;       
+}
+
+.col-50-right {
+    float: right;
+    width: 50%;
+}
+
+.col-50-up, .col-50-down {
+    margin-top: 5%;   
+}
+
+.col-25 {
+    width: 25%;
+}
+
+.col-75 {
+    width: 60%;    
+
+    border: 1px dashed white;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.row {
+    color: white;      
+}
+
+.info {
+    margin-top: 5%;
+    margin-left: 15%;
+}
+
+.up, .middle, .down {
+    margin-left: 1%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.text-center {
+    color: white;
+}
+
+td {
+    border: 1px dashed white;
+    border-radius: 10px 10px 10px 10px;
+    
+}
+
+@media screen and (max-width: 600px) {
+    /* For mobile phones: */
+    .col-50-left, .col-50-right, .col-25, .col-75, [type=submit] {
+        width: 100%;
+        margin-top: 0;
+        text-align: center;
+        border: none;
+    }
+}

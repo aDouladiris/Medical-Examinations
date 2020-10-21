@@ -1,0 +1,313 @@
+.main {
+    height: 100%;
+    padding: 5%;
+}
+
+.rounded-lg {
+border-radius: 1rem;
+}
+
+.nav-pills .nav-link {
+color: #555;
+}
+
+.nav-pills .nav-link.active {
+color: #fff;
+} 
+
+.wizard.vertical > .content
+{                
+    min-height: 700px;
+    width: 70%;
+    margin: auto;
+
+    background: transparent; 
+
+}
+
+
+.wizard.vertical > .steps > ul > li
+{
+    line-height: 1em;
+    text-align: center;
+
+    list-style-type: none;   
+    
+    height: 25%;
+    
+}
+
+.tabcontrol > .steps > ul > li:hover
+{
+    
+    border: 1px solid #bbb;
+    padding: 0;
+}
+
+.wizard.vertical > .steps > ul
+{         
+    height: 9em;      
+}
+
+.wizard > .steps a,
+.wizard > .steps a:hover,
+.wizard > .steps a:active
+{
+    border: none;                
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+    width: 80%;
+}
+
+.wizard > .steps .current a,
+.wizard > .steps .current a:hover,
+.wizard > .steps .current a:active
+{
+    background-color: #0275d8;
+   
+    border: none;                
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+    width: 80%;
+}
+
+.wizard > .steps .done a,
+.wizard > .steps .done a:hover,
+.wizard > .steps .done a:active
+{
+    background-color: #0275d8;
+
+    border: none;                
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+    width: 80%;
+
+}
+
+.wizard > .actions a,
+.wizard > .actions a:hover,
+.wizard > .actions a:active
+{
+    background-color: #0275d8;
+
+    border: none;                
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+}
+
+.title-number {
+    display: none;
+}
+
+
+label {
+    vertical-align: top;
+
+    
+}
+
+td {
+    width: 50%;
+}
+
+
+.customer-id {
+    height: 33%;
+}
+
+.selected-examinations {
+    height: 54%;
+}
+
+.total-values {
+    text-align: right;
+    height: 13%;
+}
+
+#left-table {
+    text-align: left;
+}
+
+#right-table {
+    text-align: right;
+    empty-cells: show;
+}
+
+#left-col {
+    width: 35%;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+#inputGroupSelect01 {
+    width: 50%; 
+    height: 40px;
+    border: 1px solid #bbb;
+}
+
+.special {
+    text-align: left;
+    font-size: 20px;
+}
+
+.selected-examinations {
+    overflow: auto ;
+    height:280px;
+}
+
+
+#total-table tr th {
+    width: 70%;
+    text-align: right;
+    font-size: 15px;
+    padding-right: 1%;
+
+    border: 1px dashed white;
+    border-radius: 5px 5px 5px 5px;
+}
+
+table tr td {
+    padding-right: 1%;
+    padding-left: 1%;
+}
+
+#total-table tr td {
+    border: 1px dashed white;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.nav-item {
+    list-style:none;
+}
+
+
+label {
+    width: 100%;
+    text-align: left;
+}
+
+dl, dt {
+    text-align: left;    
+}
+
+dd {
+    margin-left: 0;
+    text-align: left;
+}
+
+/* radio buttons */
+.form-check {
+    font-size: 20px;
+    
+}
+
+.form-check-input {
+    height: 50%;
+    width: 50%;
+    
+}
+
+
+.col-lg-7 {
+    margin: auto;
+    border: 1px dashed white;
+    border-radius: 5px 5px 5px 5px;
+}
+
+#receipt_table, #left-table, #right-table, #tb_receipts, #total-table {
+    width: 100%;
+}
+
+.customer-id, .selected-examinations, .total-values {
+
+    border: 1px dashed white;
+    border-radius: 5px 5px 5px 5px;
+}
+
+fieldset {
+    
+    border: 1px dashed white;
+    border-radius: 10px 10px 10px 10px;
+    width: 100%;
+}
+
+.row {
+    color: white;
+
+    height: 10%;
+}
+
+.col-25 {
+
+    height: 100%;
+
+    padding-left: 35%;
+
+    text-align: right;
+
+    width: 39%;
+    float: left;
+}
+
+.col-75 {    
+
+    height: 100%;
+
+    width: 60%;
+    float: right;
+}
+
+
+@media screen and (max-width: 600px) {
+/* For mobile phones: */
+.col-25, .col-75, [type=radio] {
+    width: 100%;
+    margin-top: 0;               
+    
+}
+
+fieldset, .row, .container {
+    width: 100%;
+    
+}
+
+.wizard.vertical > .content
+{                
+    min-height: 700px;
+    width: 105%;               
+
+    background: transparent; 
+
+}
+
+
+.wizard.vertical > .steps > ul
+{          
+
+    display: none;  
+    
+}
+}
